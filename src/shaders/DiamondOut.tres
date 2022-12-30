@@ -1,0 +1,22 @@
+[gd_resource type="ShaderMaterial" load_steps=2 format=2]
+
+[sub_resource type="Shader" id=4]
+code = "shader_type canvas_item;
+
+uniform float progress : hint_range(0, 1);
+
+uniform float diamondPixelSize = 2.0f;
+
+void fragment() {
+	float xFraction = fract(FRAGCOORD.x / diamondPixelSize);
+	float yFraction = fract(FRAGCOORD.y / diamondPixelSize);
+	if (xFraction + yFraction > progress * 2.0) {
+		discard;
+	}
+}"
+
+[resource]
+resource_local_to_scene = true
+shader = SubResource( 4 )
+shader_param/progress = 1.0
+shader_param/diamondPixelSize = 2.0

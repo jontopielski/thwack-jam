@@ -1,0 +1,182 @@
+[gd_scene load_steps=16 format=2]
+
+[ext_resource path="res://fonts/Waku.tres" type="DynamicFont" id=1]
+[ext_resource path="res://sprites/icons/WASD.png" type="Texture" id=2]
+[ext_resource path="res://sprites/icons/Space.png" type="Texture" id=3]
+[ext_resource path="res://fonts/Pico.tres" type="DynamicFont" id=4]
+[ext_resource path="res://sprites/icons/Easy.png" type="Texture" id=5]
+[ext_resource path="res://sprites/icons/Empty.png" type="Texture" id=6]
+[ext_resource path="res://sprites/icons/Medium.png" type="Texture" id=7]
+[ext_resource path="res://sprites/icons/Hard.png" type="Texture" id=8]
+[ext_resource path="res://sprites/portraits/DevilNormal.png" type="Texture" id=9]
+[ext_resource path="res://sprites/portraits/DevilPressed.png" type="Texture" id=10]
+[ext_resource path="res://src/menus/MainMenu.gd" type="Script" id=11]
+[ext_resource path="res://sprites/portraits/SlimeNormal.png" type="Texture" id=12]
+[ext_resource path="res://sprites/portraits/SlimePressed.png" type="Texture" id=13]
+[ext_resource path="res://sprites/portraits/DuckNormal.png" type="Texture" id=14]
+[ext_resource path="res://sprites/portraits/DuckPressed.png" type="Texture" id=15]
+
+[node name="MainMenu" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( 11 )
+
+[node name="Background" type="ColorRect" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color( 0.286275, 0.384314, 0.780392, 1 )
+
+[node name="Title" type="Label" parent="."]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -42.0
+margin_top = -78.0
+margin_right = 42.0
+margin_bottom = -61.0
+custom_colors/font_color_shadow = Color( 0.133333, 0.113725, 0.180392, 1 )
+custom_fonts/font = ExtResource( 1 )
+text = "Thwack"
+align = 1
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -66.0
+margin_top = -54.0
+margin_right = 66.0
+margin_bottom = -13.0
+
+[node name="Credits1" type="Label" parent="VBoxContainer"]
+margin_right = 132.0
+margin_bottom = 11.0
+custom_colors/font_color_shadow = Color( 0.133333, 0.113725, 0.180392, 1 )
+custom_fonts/font = ExtResource( 4 )
+text = "Jon Topielski - Art, Code, Design"
+
+[node name="Credits2" type="Label" parent="VBoxContainer"]
+margin_top = 15.0
+margin_right = 132.0
+margin_bottom = 26.0
+custom_colors/font_color_shadow = Color( 0.133333, 0.113725, 0.180392, 1 )
+custom_fonts/font = ExtResource( 4 )
+text = "Alphons6 - Additional Art"
+align = 1
+
+[node name="Credits3" type="Label" parent="VBoxContainer"]
+margin_top = 30.0
+margin_right = 132.0
+margin_bottom = 41.0
+custom_colors/font_color_shadow = Color( 0.133333, 0.113725, 0.180392, 1 )
+custom_fonts/font = ExtResource( 4 )
+text = "Mafgar - SFX"
+align = 1
+valign = 1
+
+[node name="Wasd" type="Sprite" parent="."]
+position = Vector2( 91, 99 )
+texture = ExtResource( 2 )
+
+[node name="Space" type="Sprite" parent="."]
+position = Vector2( 91, 118 )
+texture = ExtResource( 3 )
+
+[node name="Options" type="HBoxContainer" parent="."]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -54.0
+margin_top = 44.0
+margin_right = 56.0
+margin_bottom = 78.0
+
+[node name="Slime" type="TextureButton" parent="Options"]
+margin_right = 34.0
+margin_bottom = 34.0
+size_flags_horizontal = 6
+texture_normal = ExtResource( 12 )
+texture_pressed = ExtResource( 13 )
+texture_hover = ExtResource( 13 )
+texture_focused = ExtResource( 13 )
+
+[node name="Duck" type="TextureButton" parent="Options"]
+margin_left = 38.0
+margin_right = 72.0
+margin_bottom = 34.0
+size_flags_horizontal = 6
+texture_normal = ExtResource( 14 )
+texture_pressed = ExtResource( 15 )
+texture_hover = ExtResource( 15 )
+texture_focused = ExtResource( 15 )
+
+[node name="Devil" type="TextureButton" parent="Options"]
+margin_left = 76.0
+margin_right = 110.0
+margin_bottom = 34.0
+size_flags_horizontal = 6
+texture_normal = ExtResource( 9 )
+texture_pressed = ExtResource( 10 )
+texture_hover = ExtResource( 10 )
+texture_focused = ExtResource( 10 )
+
+[node name="Difficulty" type="Label" parent="."]
+visible = false
+margin_left = 123.0
+margin_top = 87.0
+margin_right = 167.0
+margin_bottom = 101.0
+custom_colors/font_color_shadow = Color( 0.133333, 0.113725, 0.180392, 1 )
+custom_fonts/font = ExtResource( 4 )
+text = "Difficulty:"
+
+[node name="Empty" type="TextureRect" parent="."]
+visible = false
+margin_left = 124.0
+margin_top = 95.0
+margin_right = 163.0
+margin_bottom = 112.0
+texture = ExtResource( 6 )
+
+[node name="Easy" type="TextureRect" parent="."]
+visible = false
+margin_left = 124.0
+margin_top = 95.0
+margin_right = 163.0
+margin_bottom = 112.0
+texture = ExtResource( 5 )
+
+[node name="Medium" type="TextureRect" parent="."]
+visible = false
+margin_left = 124.0
+margin_top = 95.0
+margin_right = 163.0
+margin_bottom = 112.0
+texture = ExtResource( 7 )
+
+[node name="Hard" type="TextureRect" parent="."]
+visible = false
+margin_left = 124.0
+margin_top = 95.0
+margin_right = 163.0
+margin_bottom = 112.0
+texture = ExtResource( 8 )
+
+[node name="MouseBlock" type="Control" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="InitialBeepTimer" type="Timer" parent="."]
+wait_time = 0.05
+one_shot = true
+autostart = true
+
+[connection signal="focus_entered" from="Options/Slime" to="." method="_on_Slime_focus_entered"]
+[connection signal="pressed" from="Options/Slime" to="." method="_on_Slime_pressed"]
+[connection signal="focus_entered" from="Options/Duck" to="." method="_on_Duck_focus_entered"]
+[connection signal="pressed" from="Options/Duck" to="." method="_on_Duck_pressed"]
+[connection signal="focus_entered" from="Options/Devil" to="." method="_on_Devil_focus_entered"]
+[connection signal="pressed" from="Options/Devil" to="." method="_on_Devil_pressed"]

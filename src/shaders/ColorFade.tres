@@ -1,0 +1,32 @@
+[gd_resource type="ShaderMaterial" load_steps=2 format=2]
+
+[sub_resource type="Shader" id=2]
+code = "shader_type canvas_item;
+
+uniform float progress = 0.0;
+uniform vec4 color_0 : hint_color;
+uniform vec4 color_1 : hint_color;
+uniform vec4 color_2 : hint_color;
+uniform vec4 color_3 : hint_color;
+
+void fragment() {
+	COLOR = texture(SCREEN_TEXTURE, SCREEN_UV);
+	float rgb_avg = (COLOR.r + COLOR.g + COLOR.b) / 3.0;
+	if (rgb_avg - progress > .75) {
+		COLOR = color_0;
+	} else if (rgb_avg - progress > .5) {
+		COLOR = color_1;
+	} else if (rgb_avg - progress > .25) {
+		COLOR = color_2;
+	} else {
+		COLOR = color_3;
+	}
+}"
+
+[resource]
+shader = SubResource( 2 )
+shader_param/progress = 0.0
+shader_param/color_0 = Color( 0.286275, 0.384314, 0.780392, 1 )
+shader_param/color_1 = Color( 0.215686, 0.317647, 0.615686, 1 )
+shader_param/color_2 = Color( 0.0745098, 0.215686, 0.501961, 1 )
+shader_param/color_3 = Color( 0.133333, 0.113725, 0.180392, 1 )

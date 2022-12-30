@@ -1,0 +1,437 @@
+[gd_scene load_steps=26 format=2]
+
+[ext_resource path="res://src/stacked/Net.tscn" type="PackedScene" id=1]
+[ext_resource path="res://src/stacked/StackedSprite.tscn" type="PackedScene" id=2]
+[ext_resource path="res://src/player/Player.tscn" type="PackedScene" id=3]
+[ext_resource path="res://src/court/Court.gd" type="Script" id=4]
+[ext_resource path="res://sprites/tennis/Court_5.png" type="Texture" id=5]
+[ext_resource path="res://src/court/BallMachine.tscn" type="PackedScene" id=6]
+[ext_resource path="res://src/shaders/ShadowMatch.tres" type="Material" id=7]
+[ext_resource path="res://src/court/ServeSpot.tscn" type="PackedScene" id=8]
+[ext_resource path="res://fonts/NES.tres" type="DynamicFont" id=10]
+
+[sub_resource type="StyleBoxFlat" id=10]
+bg_color = Color( 0.764706, 0.282353, 0.556863, 1 )
+
+[sub_resource type="StyleBoxFlat" id=11]
+bg_color = Color( 0.286275, 0.384314, 0.780392, 1 )
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color( 0.941176, 0.941176, 0.894118, 1 )
+expand_margin_left = 1.0
+expand_margin_right = 1.0
+expand_margin_top = 1.0
+expand_margin_bottom = 1.0
+
+[sub_resource type="Shader" id=14]
+code = "shader_type canvas_item;
+
+uniform float progress : hint_range(0, 1);
+
+uniform float diamondPixelSize = 2.0f;
+
+void fragment() {
+	float xFraction = fract(FRAGCOORD.x / diamondPixelSize);
+	float yFraction = fract(FRAGCOORD.y / diamondPixelSize);
+	if (xFraction + yFraction > progress * 2.0) {
+		discard;
+	}
+}"
+
+[sub_resource type="ShaderMaterial" id=15]
+resource_local_to_scene = true
+shader = SubResource( 14 )
+shader_param/progress = 1.0
+shader_param/diamondPixelSize = 2.0
+
+[sub_resource type="DynamicFontData" id=8]
+antialiased = false
+font_path = "res://fonts/NESCyrillic.ttf"
+
+[sub_resource type="DynamicFont" id=17]
+extra_spacing_top = -4
+extra_spacing_bottom = -1
+font_data = SubResource( 8 )
+
+[sub_resource type="StyleBoxFlat" id=16]
+bg_color = Color( 0.380392, 0.737255, 0.843137, 1 )
+expand_margin_top = 1.0
+expand_margin_bottom = 1.0
+
+[sub_resource type="RectangleShape2D" id=6]
+extents = Vector2( 85, 1 )
+
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 112, 1 )
+
+[sub_resource type="SegmentShape2D" id=3]
+b = Vector2( 216, 0 )
+
+[sub_resource type="SegmentShape2D" id=2]
+b = Vector2( 0, 216 )
+
+[sub_resource type="RectangleShape2D" id=4]
+extents = Vector2( 10, 140 )
+
+[sub_resource type="RectangleShape2D" id=5]
+extents = Vector2( 165, 10 )
+
+[sub_resource type="RectangleShape2D" id=7]
+extents = Vector2( 102.5, 0 )
+
+[sub_resource type="Animation" id=13]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath("BoostLabel:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ false ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("BoostLabel:material:shader_param/progress")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ 1.0 ]
+}
+
+[sub_resource type="Animation" id=12]
+resource_name = "speed_up"
+length = 1.25
+step = 0.05
+tracks/0/type = "value"
+tracks/0/path = NodePath("BoostLabel:material:shader_param/progress")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.5, 1.25 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ 1.0, 1.0, 0.0 ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("BoostLabel:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 1.25 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ true, false ]
+}
+
+[node name="Court" type="Node2D" groups=["court"]]
+script = ExtResource( 4 )
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+layer = -1
+
+[node name="Background" type="ColorRect" parent="CanvasLayer"]
+margin_right = 184.0
+margin_bottom = 184.0
+rect_pivot_offset = Vector2( 80, 80 )
+color = Color( 0.286275, 0.384314, 0.780392, 1 )
+
+[node name="Court" parent="." instance=ExtResource( 2 )]
+position = Vector2( 92, 92 )
+texture = ExtResource( 5 )
+hframes = 1
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2( 92, 92 )
+rotating = true
+current = true
+limit_smoothed = true
+smoothing_enabled = true
+drag_margin_left = 0.5
+drag_margin_top = 0.5
+drag_margin_right = 0.5
+drag_margin_bottom = 0.5
+
+[node name="PlayerServeSpot" parent="." instance=ExtResource( 8 )]
+position = Vector2( 129, 173 )
+
+[node name="EnemyServeSpot" parent="." instance=ExtResource( 8 )]
+position = Vector2( 56, 31 )
+
+[node name="BallSpots" type="Node2D" parent="."]
+
+[node name="ProgressBar" type="ProgressBar" parent="."]
+margin_left = 82.0
+margin_top = 175.0
+margin_right = 102.0
+margin_bottom = 178.0
+custom_styles/fg = SubResource( 10 )
+custom_styles/bg = SubResource( 11 )
+step = 1.0
+value = 100.0
+percent_visible = false
+
+[node name="ProgressTween" type="Tween" parent="ProgressBar"]
+
+[node name="Curse" type="CanvasLayer" parent="."]
+
+[node name="BoostLabel" type="Label" parent="."]
+visible = false
+material = SubResource( 15 )
+margin_left = 60.0
+margin_top = 109.0
+margin_right = 127.0
+margin_bottom = 116.0
+custom_colors/font_color = Color( 0.941176, 0.941176, 0.894118, 1 )
+custom_fonts/font = SubResource( 17 )
+custom_styles/normal = SubResource( 16 )
+text = "Speed UP!"
+
+[node name="Scores" type="VBoxContainer" parent="."]
+modulate = Color( 0.941176, 0.941176, 0.894118, 1 )
+margin_left = 177.5
+margin_top = 76.0
+margin_right = 193.5
+margin_bottom = 104.0
+grow_horizontal = 2
+grow_vertical = 2
+rect_pivot_offset = Vector2( 8.5, 15 )
+custom_constants/separation = 4
+alignment = 1
+
+[node name="EnemyScore" type="Label" parent="Scores"]
+margin_right = 16.0
+margin_bottom = 12.0
+custom_fonts/font = ExtResource( 10 )
+text = "00"
+align = 1
+
+[node name="PlayerScore" type="Label" parent="Scores"]
+margin_top = 16.0
+margin_right = 16.0
+margin_bottom = 28.0
+custom_fonts/font = ExtResource( 10 )
+text = "00"
+align = 2
+
+[node name="YSort" type="YSort" parent="."]
+
+[node name="Player" parent="YSort" instance=ExtResource( 3 )]
+position = Vector2( 93, 140 )
+
+[node name="BallMachine" parent="YSort" instance=ExtResource( 6 )]
+position = Vector2( 91, -1 )
+is_on = false
+
+[node name="Net" parent="YSort" instance=ExtResource( 1 )]
+position = Vector2( 92, 78 )
+
+[node name="FakeNet" parent="." instance=ExtResource( 1 )]
+position = Vector2( 92, 78 )
+
+[node name="PlayerBallNet" type="Area2D" parent="."]
+position = Vector2( 1, 86 )
+collision_layer = 4
+collision_mask = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PlayerBallNet"]
+position = Vector2( 92, 2 )
+shape = SubResource( 6 )
+
+[node name="EnemyBallNet" type="Area2D" parent="."]
+position = Vector2( 1, 78 )
+collision_layer = 4
+collision_mask = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="EnemyBallNet"]
+position = Vector2( 92, 4 )
+shape = SubResource( 6 )
+
+[node name="NetBody" type="StaticBody2D" parent="."]
+position = Vector2( 92, 91 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="NetBody"]
+position = Vector2( 0, 5 )
+shape = SubResource( 1 )
+
+[node name="EnemyLimit" type="StaticBody2D" parent="."]
+position = Vector2( 92, 59 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="EnemyLimit"]
+position = Vector2( 0, 7 )
+shape = SubResource( 1 )
+
+[node name="OutOfBounds" type="StaticBody2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="OutOfBounds"]
+position = Vector2( -16, -16 )
+shape = SubResource( 3 )
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="OutOfBounds"]
+position = Vector2( -16, 200 )
+shape = SubResource( 3 )
+
+[node name="CollisionShape2D3" type="CollisionShape2D" parent="OutOfBounds"]
+position = Vector2( -16, -16 )
+shape = SubResource( 2 )
+
+[node name="CollisionShape2D4" type="CollisionShape2D" parent="OutOfBounds"]
+position = Vector2( 200, -16 )
+shape = SubResource( 2 )
+
+[node name="ShadowShaders" type="Control" parent="."]
+margin_right = 40.0
+margin_bottom = 40.0
+
+[node name="ShadowShader" type="ColorRect" parent="ShadowShaders"]
+material = ExtResource( 7 )
+margin_left = -73.0
+margin_right = 12.0
+margin_bottom = 184.0
+
+[node name="ShadowShader2" type="ColorRect" parent="ShadowShaders"]
+material = ExtResource( 7 )
+margin_left = 172.0
+margin_right = 263.0
+margin_bottom = 184.0
+
+[node name="ShadowShader3" type="ColorRect" parent="ShadowShaders"]
+material = ExtResource( 7 )
+margin_left = -26.0
+margin_top = -36.0
+margin_right = 209.0
+margin_bottom = 12.0
+
+[node name="ShadowShader4" type="ColorRect" parent="ShadowShaders"]
+material = ExtResource( 7 )
+margin_left = -51.0
+margin_top = 172.0
+margin_right = 236.0
+margin_bottom = 248.0
+
+[node name="TargetPoints" type="Node2D" parent="."]
+
+[node name="Position2D" type="Position2D" parent="TargetPoints"]
+position = Vector2( 32, 32 )
+
+[node name="Position2D2" type="Position2D" parent="TargetPoints"]
+position = Vector2( 47, 55 )
+
+[node name="Position2D3" type="Position2D" parent="TargetPoints"]
+position = Vector2( 62, 40 )
+
+[node name="Position2D4" type="Position2D" parent="TargetPoints"]
+position = Vector2( 120, 30 )
+
+[node name="Position2D5" type="Position2D" parent="TargetPoints"]
+position = Vector2( 150, 42 )
+
+[node name="Position2D6" type="Position2D" parent="TargetPoints"]
+position = Vector2( 135, 63 )
+
+[node name="Position2D7" type="Position2D" parent="TargetPoints"]
+position = Vector2( 113, 55 )
+
+[node name="Position2D8" type="Position2D" parent="TargetPoints"]
+position = Vector2( 23, 19 )
+
+[node name="Position2D9" type="Position2D" parent="TargetPoints"]
+position = Vector2( 74, 20 )
+
+[node name="Position2D10" type="Position2D" parent="TargetPoints"]
+position = Vector2( 49, 21 )
+
+[node name="Position2D11" type="Position2D" parent="TargetPoints"]
+position = Vector2( 23, 60 )
+
+[node name="Position2D12" type="Position2D" parent="TargetPoints"]
+position = Vector2( 141, 24 )
+
+[node name="Position2D13" type="Position2D" parent="TargetPoints"]
+position = Vector2( 167, 30 )
+
+[node name="Position2D14" type="Position2D" parent="TargetPoints"]
+position = Vector2( 165, 64 )
+
+[node name="Position2D15" type="Position2D" parent="TargetPoints"]
+position = Vector2( 11, 38 )
+
+[node name="Position2D16" type="Position2D" parent="TargetPoints"]
+position = Vector2( 104, 20 )
+
+[node name="Position2D17" type="Position2D" parent="TargetPoints"]
+position = Vector2( 157, 18 )
+
+[node name="BallBounds" type="Area2D" parent="."]
+collision_mask = 3
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="BallBounds"]
+position = Vector2( -62, 98 )
+shape = SubResource( 4 )
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="BallBounds"]
+position = Vector2( 246, 99 )
+shape = SubResource( 4 )
+
+[node name="CollisionShape2D3" type="CollisionShape2D" parent="BallBounds"]
+position = Vector2( 91.5, -51 )
+shape = SubResource( 5 )
+
+[node name="CollisionShape2D4" type="CollisionShape2D" parent="BallBounds"]
+position = Vector2( 92, 244 )
+shape = SubResource( 5 )
+
+[node name="NetCrossing" type="Area2D" parent="."]
+position = Vector2( 0, 82 )
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="NetCrossing"]
+position = Vector2( 92.5, -2 )
+shape = SubResource( 7 )
+
+[node name="Bounds" type="ColorRect" parent="."]
+visible = false
+margin_left = 20.0
+margin_top = 20.0
+margin_right = 164.0
+margin_bottom = 164.0
+
+[node name="ScoreLocation" type="Position2D" parent="."]
+position = Vector2( 195, 90 )
+
+[node name="Center" type="Position2D" parent="."]
+position = Vector2( 92, 92 )
+
+[node name="Tween" type="Tween" parent="."]
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+anims/RESET = SubResource( 13 )
+anims/speed_up = SubResource( 12 )
+
+[node name="EnemySpawn" type="Position2D" parent="."]
+position = Vector2( 91, 34 )
+
+[node name="EndGameTimer" type="Timer" parent="."]
+wait_time = 3.0
+one_shot = true
+
+[connection signal="tween_all_completed" from="ProgressBar/ProgressTween" to="." method="_on_ProgressTween_tween_all_completed"]
+[connection signal="body_entered" from="PlayerBallNet" to="." method="_on_PlayerBallNet_body_entered"]
+[connection signal="body_entered" from="PlayerBallNet" to="." method="_on_BallNet_body_entered"]
+[connection signal="body_entered" from="EnemyBallNet" to="." method="_on_EnemyBallNet_body_entered"]
+[connection signal="body_entered" from="BallBounds" to="." method="_on_BallBounds_body_entered"]
+[connection signal="body_entered" from="NetCrossing" to="." method="_on_NetCrossing_body_entered"]
+[connection signal="timeout" from="EndGameTimer" to="." method="_on_EndGameTimer_timeout"]

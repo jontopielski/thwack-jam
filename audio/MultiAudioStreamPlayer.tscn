@@ -1,0 +1,19 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://audio/MultiAudioStreamPlayer.gd" type="Script" id=1]
+
+[node name="MultiAudioStreamPlayer" type="Node"]
+script = ExtResource( 1 )
+audio_files = [ null, null, null ]
+
+[node name="Player_0" type="AudioStreamPlayer" parent="."]
+
+[node name="Player_1" type="AudioStreamPlayer" parent="."]
+
+[node name="Player_2" type="AudioStreamPlayer" parent="."]
+
+[node name="Player_3" type="AudioStreamPlayer" parent="."]
+
+[node name="Player_4" type="AudioStreamPlayer" parent="."]
+
+[node name="Player_5" type="AudioStreamPlayer" parent="."]

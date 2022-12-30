@@ -1,0 +1,120 @@
+[gd_scene load_steps=31 format=2]
+
+[ext_resource path="res://audio/MultiAudioStreamPlayer.tscn" type="PackedScene" id=1]
+[ext_resource path="res://audio/sfx/Step2.wav" type="AudioStream" id=2]
+[ext_resource path="res://audio/sfx/Step1.wav" type="AudioStream" id=3]
+[ext_resource path="res://audio/AudioManager.gd" type="Script" id=4]
+[ext_resource path="res://audio/sfx/HitBall_01.wav" type="AudioStream" id=5]
+[ext_resource path="res://audio/sfx/HitBall_05.wav" type="AudioStream" id=6]
+[ext_resource path="res://audio/sfx/HitBall_03.wav" type="AudioStream" id=7]
+[ext_resource path="res://audio/sfx/HitBall_02.wav" type="AudioStream" id=8]
+[ext_resource path="res://audio/sfx/HitBall_04.wav" type="AudioStream" id=9]
+[ext_resource path="res://audio/sfx/swish 01.wav" type="AudioStream" id=10]
+[ext_resource path="res://audio/sfx/Swish 03.wav" type="AudioStream" id=11]
+[ext_resource path="res://audio/sfx/Swish 02.wav" type="AudioStream" id=12]
+[ext_resource path="res://audio/sfx/Bounce 01.wav" type="AudioStream" id=13]
+[ext_resource path="res://audio/sfx/ambience.ogg" type="AudioStream" id=14]
+[ext_resource path="res://audio/sfx/BallHitNet_01.wav" type="AudioStream" id=15]
+[ext_resource path="res://audio/sfx/ClubEntered.wav" type="AudioStream" id=16]
+[ext_resource path="res://audio/sfx/InputPressed.wav" type="AudioStream" id=17]
+[ext_resource path="res://audio/sfx/Success 01.wav" type="AudioStream" id=18]
+[ext_resource path="res://audio/sfx/PlayerWon.wav" type="AudioStream" id=19]
+[ext_resource path="res://audio/sfx/PlayerLost.wav" type="AudioStream" id=20]
+[ext_resource path="res://audio/sfx/RobotVoice07.wav" type="AudioStream" id=21]
+[ext_resource path="res://audio/sfx/RobotVoice01.wav" type="AudioStream" id=22]
+[ext_resource path="res://audio/sfx/RobotVoice02.wav" type="AudioStream" id=23]
+[ext_resource path="res://audio/sfx/RobotVoice04.wav" type="AudioStream" id=24]
+[ext_resource path="res://audio/sfx/RobotVoice03.wav" type="AudioStream" id=25]
+[ext_resource path="res://audio/sfx/Success 02.wav" type="AudioStream" id=26]
+[ext_resource path="res://audio/sfx/Success 03.wav" type="AudioStream" id=27]
+[ext_resource path="res://audio/sfx/Success 04.wav" type="AudioStream" id=28]
+[ext_resource path="res://audio/sfx/Retro_002.wav" type="AudioStream" id=29]
+[ext_resource path="res://audio/sfx/RobotVoice05.wav" type="AudioStream" id=30]
+
+[node name="AudioManager" type="Node"]
+pause_mode = 2
+script = ExtResource( 4 )
+
+[node name="Music" type="Node" parent="."]
+
+[node name="Crowd" type="AudioStreamPlayer" parent="Music"]
+stream = ExtResource( 14 )
+volume_db = -9.613
+
+[node name="Sounds" type="Node" parent="."]
+
+[node name="TakeStep" parent="Sounds" instance=ExtResource( 1 )]
+audio_files = [ ExtResource( 3 ), ExtResource( 2 ) ]
+volume_db = -21.143
+pitch_randomness = 0.1
+max_sounds_playing = 1
+delay_offset_ms = 4.5
+
+[node name="EnemyTakeStep" parent="Sounds" instance=ExtResource( 1 )]
+audio_files = [ ExtResource( 3 ), ExtResource( 2 ) ]
+volume_db = -80.0
+pitch_scale = 0.9
+pitch_randomness = 0.1
+max_sounds_playing = 1
+
+[node name="BallHit" parent="Sounds" instance=ExtResource( 1 )]
+audio_files = [ ExtResource( 5 ), ExtResource( 8 ), ExtResource( 7 ), ExtResource( 9 ), ExtResource( 6 ) ]
+volume_db = -13.487
+pitch_randomness = 0.2
+max_sounds_playing = 2
+delay_offset_ms = 5.0
+randomized_order = true
+
+[node name="Swish" parent="Sounds" instance=ExtResource( 1 )]
+audio_files = [ ExtResource( 10 ), ExtResource( 12 ), ExtResource( 11 ) ]
+volume_db = -12.227
+pitch_randomness = 0.2
+max_sounds_playing = 2
+
+[node name="Bounce" parent="Sounds" instance=ExtResource( 1 )]
+audio_files = [ ExtResource( 13 ) ]
+volume_db = -24.462
+pitch_randomness = 0.1
+max_sounds_playing = 1
+delay_offset_ms = 50.0
+
+[node name="EnemyScored" parent="Sounds" instance=ExtResource( 1 )]
+audio_files = [ ExtResource( 15 ) ]
+volume_db = -5.0
+pitch_randomness = 0.05
+
+[node name="PlayerScored" parent="Sounds" instance=ExtResource( 1 )]
+audio_files = [ ExtResource( 18 ), ExtResource( 26 ), ExtResource( 27 ), ExtResource( 28 ) ]
+volume_db = -5.0
+pitch_randomness = 0.05
+randomized_order = true
+
+[node name="EnterMatch" parent="Sounds" instance=ExtResource( 1 )]
+audio_files = [ ExtResource( 16 ) ]
+volume_db = -10.0
+pitch_randomness = 0.05
+
+[node name="SpeedUp" parent="Sounds" instance=ExtResource( 1 )]
+audio_files = [ ExtResource( 17 ) ]
+volume_db = -9.0
+pitch_randomness = 0.05
+
+[node name="PlayerWon" parent="Sounds" instance=ExtResource( 1 )]
+audio_files = [ ExtResource( 19 ) ]
+volume_db = -9.0
+pitch_randomness = 0.05
+
+[node name="PlayerLost" parent="Sounds" instance=ExtResource( 1 )]
+audio_files = [ ExtResource( 20 ) ]
+volume_db = -11.0
+pitch_randomness = 0.05
+
+[node name="ScoreBeep" parent="Sounds" instance=ExtResource( 1 )]
+audio_files = [ ExtResource( 21 ), ExtResource( 22 ), ExtResource( 23 ), ExtResource( 25 ), ExtResource( 24 ), ExtResource( 30 ) ]
+volume_db = -12.0
+pitch_randomness = 0.1
+
+[node name="ChangeOptions" parent="Sounds" instance=ExtResource( 1 )]
+audio_files = [ ExtResource( 29 ) ]
+volume_db = -10.0
+pitch_randomness = 0.1

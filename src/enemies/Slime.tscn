@@ -1,0 +1,217 @@
+[gd_scene load_steps=32 format=2]
+
+[ext_resource path="res://src/stacked/StackedSprite.tscn" type="PackedScene" id=1]
+[ext_resource path="res://src/enemies/Enemy.gd" type="Script" id=2]
+[ext_resource path="res://sprites/icons/Happy.png" type="Texture" id=3]
+[ext_resource path="res://sprites/icons/Sad.png" type="Texture" id=4]
+[ext_resource path="res://sprites/icons/InvertXY.png" type="Texture" id=5]
+[ext_resource path="res://sprites/enemies/Blob.png" type="Texture" id=6]
+[ext_resource path="res://sprites/icons/Serve.png" type="Texture" id=7]
+
+[sub_resource type="CircleShape2D" id=1]
+radius = 6.08276
+
+[sub_resource type="CircleShape2D" id=4]
+radius = 19.0
+
+[sub_resource type="Animation" id=3]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath("Body:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 0, 0 ) ]
+}
+
+[sub_resource type="Animation" id=2]
+resource_name = "wobble"
+length = 0.3
+loop = true
+step = 0.05
+tracks/0/type = "value"
+tracks/0/path = NodePath("Body:position")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector2( 0, 0 ), Vector2( 0, -1 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath(".:wobble_offset")
+tracks/1/interp = 2
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ 0.0, -1.0 ]
+}
+
+[sub_resource type="AtlasTexture" id=6]
+atlas = ExtResource( 7 )
+region = Rect2( 0, 0, 16, 16 )
+
+[sub_resource type="AtlasTexture" id=7]
+atlas = ExtResource( 7 )
+region = Rect2( 16, 0, 16, 16 )
+
+[sub_resource type="AtlasTexture" id=8]
+atlas = ExtResource( 7 )
+region = Rect2( 32, 0, 16, 16 )
+
+[sub_resource type="AtlasTexture" id=9]
+atlas = ExtResource( 7 )
+region = Rect2( 48, 0, 16, 16 )
+
+[sub_resource type="SpriteFrames" id=25]
+animations = [ {
+"frames": [ SubResource( 6 ), SubResource( 7 ), SubResource( 8 ), SubResource( 9 ) ],
+"loop": true,
+"name": "default",
+"speed": 5.0
+} ]
+
+[sub_resource type="AtlasTexture" id=10]
+atlas = ExtResource( 5 )
+region = Rect2( 0, 0, 16, 16 )
+
+[sub_resource type="AtlasTexture" id=11]
+atlas = ExtResource( 5 )
+region = Rect2( 16, 0, 16, 16 )
+
+[sub_resource type="AtlasTexture" id=12]
+atlas = ExtResource( 5 )
+region = Rect2( 32, 0, 16, 16 )
+
+[sub_resource type="AtlasTexture" id=13]
+atlas = ExtResource( 5 )
+region = Rect2( 48, 0, 16, 16 )
+
+[sub_resource type="SpriteFrames" id=26]
+animations = [ {
+"frames": [ SubResource( 10 ), SubResource( 11 ), SubResource( 12 ), SubResource( 13 ) ],
+"loop": true,
+"name": "default",
+"speed": 5.0
+} ]
+
+[sub_resource type="AtlasTexture" id=15]
+atlas = ExtResource( 3 )
+region = Rect2( 0, 0, 16, 16 )
+
+[sub_resource type="AtlasTexture" id=16]
+atlas = ExtResource( 3 )
+region = Rect2( 16, 0, 16, 16 )
+
+[sub_resource type="AtlasTexture" id=17]
+atlas = ExtResource( 3 )
+region = Rect2( 32, 0, 16, 16 )
+
+[sub_resource type="AtlasTexture" id=18]
+atlas = ExtResource( 3 )
+region = Rect2( 48, 0, 16, 16 )
+
+[sub_resource type="SpriteFrames" id=27]
+animations = [ {
+"frames": [ SubResource( 15 ), SubResource( 16 ), SubResource( 17 ), SubResource( 18 ) ],
+"loop": true,
+"name": "default",
+"speed": 5.0
+} ]
+
+[sub_resource type="AtlasTexture" id=21]
+atlas = ExtResource( 4 )
+region = Rect2( 0, 0, 16, 16 )
+
+[sub_resource type="AtlasTexture" id=22]
+atlas = ExtResource( 4 )
+region = Rect2( 16, 0, 16, 16 )
+
+[sub_resource type="AtlasTexture" id=23]
+atlas = ExtResource( 4 )
+region = Rect2( 32, 0, 16, 16 )
+
+[sub_resource type="AtlasTexture" id=24]
+atlas = ExtResource( 4 )
+region = Rect2( 48, 0, 16, 16 )
+
+[sub_resource type="SpriteFrames" id=28]
+animations = [ {
+"frames": [ SubResource( 21 ), SubResource( 22 ), SubResource( 23 ), SubResource( 24 ) ],
+"loop": true,
+"name": "default",
+"speed": 5.0
+} ]
+
+[node name="SlimeEnemy" type="KinematicBody2D" groups=["enemy", "participants"]]
+script = ExtResource( 2 )
+SPEED = 25.0
+WAITING_PERIOD_Y_LOWER_BOUND = 30.0
+WAITING_PERIOD_Y_UPPER_BOUND = 50.0
+wobble_offset = -0.379661
+leg_color = Color( 0.133333, 0.113725, 0.180392, 1 )
+shorts_color = Color( 0.47451, 0.654902, 0.709804, 1 )
+shoe_color = Color( 0.564706, 0.803922, 0.294118, 1 )
+head_color = Color( 1, 0.878431, 0.141176, 1 )
+hands_color = Color( 0.133333, 0.113725, 0.180392, 1 )
+handle_color = Color( 0.941176, 0.941176, 0.894118, 1 )
+mesh_border_color = Color( 0.843137, 0.192157, 0.101961, 1 )
+white_color = Color( 0.941176, 0.941176, 0.894118, 1 )
+shadow_color = Color( 0.439216, 0.501961, 0.521569, 1 )
+current_state = 1
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource( 1 )
+
+[node name="Body" parent="." instance=ExtResource( 1 )]
+texture = ExtResource( 6 )
+hframes = 14
+
+[node name="RacquetArea" type="Area2D" parent="."]
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="RacquetArea"]
+shape = SubResource( 4 )
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+anims/RESET = SubResource( 3 )
+anims/wobble = SubResource( 2 )
+
+[node name="Tween" type="Tween" parent="."]
+
+[node name="AdjustTween" type="Tween" parent="."]
+
+[node name="Icons" type="Node2D" parent="."]
+position = Vector2( 0, -26 )
+
+[node name="ServeIcon" type="AnimatedSprite" parent="Icons"]
+visible = false
+frames = SubResource( 25 )
+
+[node name="InvertXYIcon" type="AnimatedSprite" parent="Icons"]
+visible = false
+frames = SubResource( 26 )
+
+[node name="HappyIcon" type="AnimatedSprite" parent="Icons"]
+visible = false
+frames = SubResource( 27 )
+frame = 1
+
+[node name="SadIcon" type="AnimatedSprite" parent="Icons"]
+visible = false
+frames = SubResource( 28 )
+
+[connection signal="body_entered" from="RacquetArea" to="." method="_on_RacquetArea_body_entered"]
+[connection signal="tween_all_completed" from="Tween" to="." method="_on_Tween_tween_all_completed"]

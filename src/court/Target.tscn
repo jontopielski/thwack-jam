@@ -1,0 +1,28 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://src/stacked/StackedSprite.tscn" type="PackedScene" id=1]
+[ext_resource path="res://sprites/tennis/SignPost.png" type="Texture" id=2]
+[ext_resource path="res://sprites/tennis/Target.png" type="Texture" id=3]
+[ext_resource path="res://src/court/Target.gd" type="Script" id=4]
+
+[sub_resource type="CapsuleShape2D" id=1]
+radius = 4.0
+height = 10.0
+
+[node name="Target" type="Area2D"]
+collision_mask = 2
+script = ExtResource( 4 )
+
+[node name="StackedSprite" parent="." instance=ExtResource( 1 )]
+texture = ExtResource( 2 )
+hframes = 8
+
+[node name="Sprite" type="Sprite" parent="."]
+position = Vector2( 0, -10 )
+texture = ExtResource( 3 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2( 0, -6 )
+shape = SubResource( 1 )
+
+[connection signal="body_entered" from="." to="." method="_on_Target_body_entered"]

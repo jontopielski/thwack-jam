@@ -1,0 +1,21 @@
+[gd_resource type="ShaderMaterial" load_steps=2 format=2]
+
+[sub_resource type="Shader" id=4]
+code = "shader_type canvas_item;
+
+uniform vec4 match_color : hint_color;
+uniform vec4 set_color : hint_color;
+
+void fragment() {
+	vec4 current_color = texture(SCREEN_TEXTURE, SCREEN_UV);
+	if (abs(current_color.r - match_color.r) < 0.01 && abs(current_color.g - match_color.g) < 0.01 && abs(current_color.b - match_color.b) < 0.01) {
+		COLOR = set_color;
+	} else {
+		COLOR = current_color;
+	}
+}"
+
+[resource]
+shader = SubResource( 4 )
+shader_param/match_color = Color( 0.439216, 0.501961, 0.521569, 1 )
+shader_param/set_color = Color( 0.207843, 0.239216, 0.309804, 1 )
